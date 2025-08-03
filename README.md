@@ -123,22 +123,7 @@ curl http://localhost:3000           # frontend (should return HTML)
 
 ## 🗂 Folder Structure
 
-```
-tech-news-app/
-├── docker-compose.infra.yml       # Kafka, Zookeeper, MongoDB
-├── docker-compose.services.yml    # news-service, notification-service, web-frontend
-├── services/
-│   ├── news-service/
-│   │   └── server.js
-│   ├── notification-service/
-│   │   └── server.js
-│   └── web-frontend/
-│       ├── server.js
-│       ├── views/
-│       └── public/
-├── README.md
-└── .gitignore
-```
+![alt text](Folder-structure.png)
 
 ---
 
