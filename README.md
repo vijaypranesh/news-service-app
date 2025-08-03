@@ -99,7 +99,7 @@ curl http://localhost:5000/health    # news-service
 curl http://localhost:4000/health    # notification-service
 curl http://localhost:3000           # frontend (should return HTML)
 ```
-
+![alt text](Demo.png)
 ---
 
 ## 🛠️ Debugging & Inspection
