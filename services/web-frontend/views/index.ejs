@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>📰 Tech News</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h1>📰 Today's Tech Highlights</h1>
+  <% if (news.length === 0) { %>
+    <p>No news available.</p>
+  <% } else { %>
+    <ul>
+      <% news.forEach(item => { %>
+        <li class="news-card">
+          <h2><%= item.title %></h2>
+          <p><%= item.summary %></p>
+          <span><strong>🕒 IST:</strong> <%= item.istTime %></span>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+</body>
+</html>

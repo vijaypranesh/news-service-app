@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  notification-service:
+    build: /home/vijay/Dev/AI-Projects/news-service/services/notification-service
+    ports:
+      - "4000:4000"
+    networks:
+      - news-app-network
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/tech-news
+      KAFKA_BROKER: kafka:9092
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  news-service:
+    build: /home/vijay/Dev/AI-Projects/news-service/services/news-service
+    ports:
+      - "5000:5000"
+    networks:
+      - news-app-network
+    environment:
+      KAFKA_BROKER: kafka:9092
+
+  web-frontend:
+    build: /home/vijay/Dev/AI-Projects/news-service/services/web-frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - news-app-network
+    depends_on:
+      - notification-service
+
+networks:
+  news-app-network:
+    external: true

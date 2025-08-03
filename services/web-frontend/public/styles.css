@@ -1,0 +1,34 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+  background: #f7f7f7;
+  color: #333;
+}
+
+h1 {
+  color: #1a73e8;
+  margin-bottom: 2rem;
+}
+
+.news-card {
+  background: white;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #1a73e8;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.news-card h2 {
+  margin: 0;
+  color: #333;
+}
+
+.news-card p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.news-card span {
+  font-size: 0.85rem;
+  color: #666;
+}
