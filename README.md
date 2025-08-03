@@ -6,16 +6,7 @@ This is a simple full-stack microservices application built using Node.js, Expre
 
 ## 🧱 Architecture
 
-```
-+-------------+       Kafka       +--------------------+       MongoDB       +---------------+
-| news-service|  ─────────────▶   | notification-service|  ───────────────▶  |  news-database |
-+-------------+                   +--------------------+                      +---------------+
-                                                    │
-                                                    ▼
-                                             +--------------+
-                                             | web-frontend |
-                                             +--------------+
-```
+![alt text](News-Services-App.png)
 
 - **news-service**: Accepts news via HTTP POST and publishes to Kafka.
 - **notification-service**: Consumes Kafka messages, saves to MongoDB, exposes stored news.
