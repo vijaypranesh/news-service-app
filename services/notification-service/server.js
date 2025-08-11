@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const News = require('./models/News');
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3001;
 
 // Healthcheck route
 app.get('/health', (req, res) => {
@@ -56,7 +56,7 @@ app.listen(PORT, () => {
 });
 
 // Connect to MongoDB
-mongoose.connect('mongodb://mongodb:27017/tech-news', {
+mongoose.connect('mongodb://mongodb.infra.svc.cluster.local.:27017/tech-news', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
@@ -66,9 +66,10 @@ mongoose.connect('mongodb://mongodb:27017/tech-news', {
 });
 
 // Kafka setup
+const kafkaBroker = process.env.KAFKA_BROKER || 'kafka:9092';
 const kafka = new Kafka({
-  clientId: 'notification-service',
-  brokers: ['kafka:9092'],
+  clientId: 'news-service',
+  brokers: [kafkaBroker],
 });
 
 const consumer = kafka.consumer({ groupId: 'news-group' });

@@ -3,15 +3,16 @@ const bodyParser = require('body-parser');
 const { Kafka } = require('kafkajs');
 
 const app = express();
-const PORT = 5000;
+const PORT = 3000;
 
 // Middleware to parse JSON
 app.use(bodyParser.json());
 
 // Kafka setup
+const kafkaBroker = process.env.KAFKA_BROKER || 'kafka:9092';
 const kafka = new Kafka({
   clientId: 'news-service',
-  brokers: ['kafka:9092'],
+  brokers: [kafkaBroker],
 });
 
 const producer = kafka.producer();

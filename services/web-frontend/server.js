@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", async (req, res) => {
   try {
-    const response = await axios.get("http://notification-service:4000/news");
+    const response = await axios.get("http://notification-service.news-app.svc.cluster.local.:3001/news");
     const news = response.data.map(item => {
       const istDate = new Date(item.timestamp).toLocaleString("en-IN", {
         timeZone: "Asia/Kolkata"
@@ -24,7 +24,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-const PORT = 3000;
+const PORT = 3002;
 app.listen(PORT, () => {
   console.log(`🧠 Web UI running at http://localhost:${PORT}`);
 });

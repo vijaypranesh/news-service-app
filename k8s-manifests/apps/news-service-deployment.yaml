@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: news-app
+  name: news-service
+  labels:
+    app: news-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: news-service
+  template:
+    metadata:
+      labels:
+        app: news-service
+    spec:
+      containers:
+      - name: news-service
+        image: vijaypranesh/news-service:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: KAFKA_BROKER
+          value: 172.17.0.3:30092
+        - name: MONGO_URL
+          value: mongodb://mongodb.infra.svc.cluster.local:27017/tech-news
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: news-app
+  name: news-service
+spec:
+  ports:
+  - port: 3000
+    targetPort: 3000
+  selector:
+    app: news-service

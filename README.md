@@ -207,6 +207,42 @@ git push -u origin main
 ```
 
 ---
+## How To use with K8S
+
+# Starting
+minikube start --driver=docker --network=bridge
+minikube tunnel &
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+kubectl get svc -n ingress-nginx
+Add Ingress external IP to hosts file
+kubectl create namespace infra
+kubectl create namespace news-app
+
+# From K8s infra Dir
+kubectl apply -f zookeeper-deployment.yaml 
+kubectl apply -f kafka-deployment.yaml 
+minikube ip #check and use this as nodeport IP
+kubectl apply -f kafka-nodeport.yaml 
+kubectl apply -f mongodb-deployment.yaml
+
+# From K8s App dir
+kubectl apply -f ingress.yml
+kubectl apply -f news-service-deployment.yaml #Make sure your Kafka broker is <nodeport_IP>:30092
+kubectl apply -f notification-service-deployment.yaml #Make sure your Kafka broker is <nodeport_IP>:30092
+kubectl apply -f web-frontend-deployment.yaml
+
+# To test
+curl -X POST http://news.local/news \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "AI Breakthrough in 2025",
+    "summary": "A new AI model surpasses human-level reasoning.",
+    "timestamp": "2025-07-30T12:34:00Z"
+}'
+
+# To resolve minikube tunnel stuck problem
+Delete this file after killing the process
+~/.minikube/profiles/minikube/.tunnel_lock
 
 ## 🧾 Attribution
 
