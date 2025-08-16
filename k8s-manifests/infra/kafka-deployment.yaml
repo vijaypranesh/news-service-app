@@ -28,8 +28,8 @@ spec:
         - name: ALLOW_PLAINTEXT_LISTENER
           value: "yes"
         - name: KAFKA_ADVERTISED_LISTENERS
-          value: PLAINTEXT://172.17.0.3:30092
-        
+ #         value: PLAINTEXT://74.225.32.180:30092
+          value: PLAINTEXT://kafka.infra.svc.cluster.local:9092 
 ---
 apiVersion: v1
 kind: Service

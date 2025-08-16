@@ -22,7 +22,8 @@ spec:
         - containerPort: 3000
         env:
         - name: KAFKA_BROKER
-          value: 172.17.0.3:30092
+   #       value: 74.225.32.180:30092
+          value: kafka.infra.svc.cluster.local:9092
         - name: MONGO_URL
           value: mongodb://mongodb.infra.svc.cluster.local:27017/tech-news
 

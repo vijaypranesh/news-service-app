@@ -231,12 +231,31 @@ kubectl apply -f news-service-deployment.yaml #Make sure your Kafka broker is <n
 kubectl apply -f notification-service-deployment.yaml #Make sure your Kafka broker is <nodeport_IP>:30092
 kubectl apply -f web-frontend-deployment.yaml
 
+
+# Using AKS for deployment
+
+Create AKS cluster and then
+
+az aks get-credentials --resource-group NewsRG --name NewsAKSCluster
+
+kubectl create namespace infra
+kubectl create namespace news-app
+kubectl apply -f zookeeper-deployment.yaml
+kubectl apply -f kafka-deployment.yaml
+kubectl apply -f mongodb-deployment.yaml
+kubectl get pods -n infra
+kubectl apply -f news-service-deployment.yaml
+kubectl apply -f notification-service-deployment.yaml
+kubectl apply -f web-frontend-deployment.yam
+kubectl apply -f nginx.yml
+
+
 # To test
-curl -X POST http://news.local/news \
+curl -X POST http://20.44.60.109/news \
   -H "Content-Type: application/json" \
   -d '{
-    "title": "AI Breakthrough in 2025",
-    "summary": "A new AI model surpasses human-level reasoning.",
+    "title": "Successfully onboarded to AKS",
+    "summary": "Finally onboarded my news app to AKS",
     "timestamp": "2025-07-30T12:34:00Z"
 }'
 
