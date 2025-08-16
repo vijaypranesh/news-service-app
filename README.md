@@ -212,48 +212,47 @@ git push -u origin main
 ## How To use with K8S
 
 # Starting
-minikube start --driver=docker --network=bridge
-minikube tunnel &
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
-kubectl get svc -n ingress-nginx
-Add Ingress external IP to hosts file
-kubectl create namespace infra
-kubectl create namespace news-app
+- minikube start --driver=docker --network=bridge
+- minikube tunnel &
+- kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+- kubectl get svc -n ingress-nginx
+- Add Ingress external IP to hosts file
+- kubectl create namespace infra
+- kubectl create namespace news-app
 
 # From K8s infra Dir
-kubectl apply -f zookeeper-deployment.yaml 
-kubectl apply -f kafka-deployment.yaml 
-minikube ip #check and use this as nodeport IP
-kubectl apply -f kafka-nodeport.yaml 
-kubectl apply -f mongodb-deployment.yaml
+- kubectl apply -f zookeeper-deployment.yaml 
+- kubectl apply -f kafka-deployment.yaml 
+- minikube ip #check and use this as nodeport IP
+- kubectl apply -f kafka-nodeport.yaml 
+- kubectl apply -f mongodb-deployment.yaml
 
 # From K8s App dir
-kubectl apply -f ingress.yml
-kubectl apply -f news-service-deployment.yaml #Make sure your Kafka broker is <nodeport_IP>:30092
-kubectl apply -f notification-service-deployment.yaml #Make sure your Kafka broker is <nodeport_IP>:30092
-kubectl apply -f web-frontend-deployment.yaml
+- kubectl apply -f ingress.yml
+- kubectl apply -f news-service-deployment.yaml #Make sure your Kafka broker is <nodeport_IP>:30092
+- kubectl apply -f notification-service-deployment.yaml #Make sure your Kafka broker is <nodeport_IP>:30092
+- kubectl apply -f web-frontend-deployment.yaml
 
 # docker image build and push to public Repo
-docker build -t news-service:latest .
-docker tag news-service:latest vijaypranesh/news-service:latest
-docker push vijaypranesh/news-service:latest
+- docker build -t news-service:latest .
+- docker tag news-service:latest vijaypranesh/news-service:latest
+- docker push vijaypranesh/news-service:latest
   
 # Using AKS for deployment
 
 Create AKS cluster and then
 
-az aks get-credentials --resource-group NewsRG --name NewsAKSCluster
-
-kubectl create namespace infra
-kubectl create namespace news-app
-kubectl apply -f zookeeper-deployment.yaml
-kubectl apply -f kafka-deployment.yaml
-kubectl apply -f mongodb-deployment.yaml
-kubectl get pods -n infra
-kubectl apply -f news-service-deployment.yaml
-kubectl apply -f notification-service-deployment.yaml
-kubectl apply -f web-frontend-deployment.yaml
-kubectl apply -f nginx.yml
+- az aks get-credentials --resource-group NewsRG --name NewsAKSCluster
+- kubectl create namespace infra
+- kubectl create namespace news-app
+- kubectl apply -f zookeeper-deployment.yaml
+- kubectl apply -f kafka-deployment.yaml
+- kubectl apply -f mongodb-deployment.yaml
+- kubectl get pods -n infra
+- kubectl apply -f news-service-deployment.yaml
+- kubectl apply -f notification-service-deployment.yaml
+- kubectl apply -f web-frontend-deployment.yaml
+- kubectl apply -f nginx.yml
 
 # To test
 curl -X POST http://52.140.19.143/news \
