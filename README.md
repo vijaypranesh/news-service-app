@@ -1,6 +1,6 @@
 # 📰 Tech News Microservices App
 
-This is a simple full-stack microservices application built using Node.js, Express, Kafka, MongoDB, and Docker Compose. It allows users to post tech news, which is then distributed via Kafka to a notification service, stored in MongoDB, and displayed in a web UI.
+This is a simple full-stack microservices application built using Node.js, Express, Kafka, MongoDB, and Docker Compose. It allows users to post tech news, which is then distributed via Kafka to a notification service, stored in MongoDB, and displayed in a web UI. Also added Python code to get news using RSS Feed from multiple technical blog site and then post it to News-Service.
 
 ---
 
@@ -13,6 +13,7 @@ This is a simple full-stack microservices application built using Node.js, Expre
 - **web-frontend**: Fetches and displays saved news.
 - **Kafka + Zookeeper**: Message broker infrastructure.
 - **MongoDB**: Persistent storage.
+- **Fetch News**: Python code to fetch news from multiple technical blog sites and also use AI to summarize and post the news.
 
 ---
 
@@ -23,7 +24,8 @@ This is a simple full-stack microservices application built using Node.js, Expre
 - MongoDB
 - Docker & Docker Compose
 - EJS templating for frontend
-
+- Python
+- Hugging Face AI Summarizer to summarize News
 ---
 
 ## 🚀 Getting Started
@@ -231,7 +233,11 @@ kubectl apply -f news-service-deployment.yaml #Make sure your Kafka broker is <n
 kubectl apply -f notification-service-deployment.yaml #Make sure your Kafka broker is <nodeport_IP>:30092
 kubectl apply -f web-frontend-deployment.yaml
 
-
+# docker image build and push to public Repo
+docker build -t news-service:latest .
+docker tag news-service:latest vijaypranesh/news-service:latest
+docker push vijaypranesh/news-service:latest
+  
 # Using AKS for deployment
 
 Create AKS cluster and then
@@ -246,18 +252,23 @@ kubectl apply -f mongodb-deployment.yaml
 kubectl get pods -n infra
 kubectl apply -f news-service-deployment.yaml
 kubectl apply -f notification-service-deployment.yaml
-kubectl apply -f web-frontend-deployment.yam
+kubectl apply -f web-frontend-deployment.yaml
 kubectl apply -f nginx.yml
 
-
 # To test
-curl -X POST http://20.44.60.109/news \
+curl -X POST http://52.140.19.143/news \
   -H "Content-Type: application/json" \
   -d '{
     "title": "Successfully onboarded to AKS",
     "summary": "Finally onboarded my news app to AKS",
+    "url": "www.abc.com"
     "timestamp": "2025-07-30T12:34:00Z"
 }'
+
+# Python code to fetch news from multiple technical blogsites and post it news service is created.
+Before running Python code:
+pip install feedparser requests transformers torch
+
 
 # To resolve minikube tunnel stuck problem
 Delete this file after killing the process

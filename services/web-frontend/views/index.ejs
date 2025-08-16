@@ -13,8 +13,23 @@
     <ul>
       <% news.forEach(item => { %>
         <li class="news-card">
-          <h2><%= item.title %></h2>
+          <h2>
+            <a href="<%= item.url %>" target="_blank" rel="noopener noreferrer">
+              <%= item.title %>
+            </a>
+          </h2>
           <p><%= item.summary %></p>
+          <% if (item.url) { %>
+            <p>
+              <strong>Source URL:</strong>
+              <a href="<%= item.url %>" target="_blank" rel="noopener noreferrer">
+                <%= item.url %>
+              </a>
+            </p>
+          <% } %>
+          <% if (item.source) { %>
+            <p><strong>Source:</strong> <%= item.source %></p>
+          <% } %>
           <span><strong>🕒 IST:</strong> <%= item.istTime %></span>
         </li>
       <% }) %>

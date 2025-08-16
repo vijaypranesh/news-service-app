@@ -29,7 +29,7 @@ const producer = kafka.producer();
 
 // POST /news route
 app.post('/news', async (req, res) => {
-  const { title, summary } = req.body;
+  const { title, summary, url, source } = req.body;
 
   if (!title || !summary) {
     return res.status(400).json({ message: 'Missing title or summary' });
@@ -37,8 +37,10 @@ app.post('/news', async (req, res) => {
 
   try {
     const newsMessage = {
-      title,
-      summary,
+      title: title,
+      summary: summary,
+      url: url,                 // Add the article URL
+      source: source,           // Add source name (e.g., CNN, TechCrunch)
       timestamp: new Date().toISOString(),
     };
 

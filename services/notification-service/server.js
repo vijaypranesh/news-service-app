@@ -22,34 +22,6 @@ app.get('/news', async (req, res) => {
   }
 });
 
-// Post news
-
-app.use(express.json());
-
-app.post('/api/news', async (req, res) => {
-  const { title, summary, timestamp } = req.body;
-
-  const message = {
-    title,
-    summary,
-    timestamp: timestamp || new Date().toISOString(),
-  };
-
-  try {
-    await producer.send({
-      topic: 'tech-news',
-      messages: [{ value: JSON.stringify(message) }],
-    });
-    console.log('📤 Sent news to Kafka');
-    res.status(200).json({ status: 'News sent to Kafka' });
-  } catch (error) {
-    console.error('❌ Kafka produce error:', error);
-    res.status(500).json({ error: 'Failed to send news to Kafka' });
-  }
-});
-
-
-
 // Start Express server (for healthcheck)
 app.listen(PORT, () => {
   console.log(`✅ Healthcheck server listening on port ${PORT}`);
@@ -85,6 +57,8 @@ const run = async () => {
       console.log(`🔔 New Tech News Notification!
 📰 Title: ${data.title}
 📝 Summary: ${data.summary}
+🔗 URL: ${data.url || 'N/A'}
+🏢 Source: ${data.source || 'N/A'}
 📅 Timestamp: ${data.timestamp}
 --------------------------`);
 
@@ -92,6 +66,8 @@ const run = async () => {
         await News.create({
           title: data.title,
           summary: data.summary,
+          url: data.url,
+          source: data.source,
           timestamp: data.timestamp || new Date()
         });
         console.log('🗃️ News saved to MongoDB');
