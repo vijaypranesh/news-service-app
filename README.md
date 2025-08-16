@@ -1,6 +1,6 @@
 # 📰 Tech News Microservices App
 
-This is a simple full-stack microservices application built using Node.js, Express, Kafka, MongoDB, and Docker Compose. It allows users to post tech news, which is then distributed via Kafka to a notification service, stored in MongoDB, and displayed in a web UI. Also added Python code to get news using RSS Feed from multiple technical blog site and then post it to News-Service.
+This is a simple full-stack microservices NEWS application built using Node.js, Express, Kafka, MongoDB, Docker and Kubernetes. Python code to get news using RSS Feed from multiple technical blog site and then Summarize all news using AI Hugging Face, finally post it to News-Service, which is then distributed via Kafka to a notification service, stored in MongoDB, and displayed in a web UI. It allows users to post tech news
 
 ---
 
